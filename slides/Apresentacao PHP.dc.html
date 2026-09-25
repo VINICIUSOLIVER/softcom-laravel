@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Cabin+Sketch:wght@400;700&amp;family=Patrick+Hand&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+:root { --type-hero: 240px; --type-section: 170px; --type-title: 68px; --type-subtitle: 40px; --type-body: 34px; --type-small: 28px; --type-code: 24px; --pad-top: 80px; --pad-bottom: 64px; --pad-x: 110px; --gap-title: 48px; --gap-item: 28px; }
+html, body { margin: 0; background: #0c0d0c; }
+a { color: oklch(0.87 0.1 95); }
+a:hover { color: #ecebe4; }
+</style>
+</helmet>
+<x-import component-from-global-scope="deck-stage" from="./deck-stage.js" width="1920" height="1080" hint-size="100%,100%" data-uneditable="">
+
+<section data-label="Capa" data-speaker-notes="Apresentação: quem sou, o que vamos ver hoje (SOLID, PSR-1 e Docker)." style="background: radial-gradient(ellipse 60% 50% at 25% 30%, rgba(255,255,255,0.05), transparent 70%), radial-gradient(ellipse 50% 60% at 80% 75%, rgba(255,255,255,0.035), transparent 70%), #151716; box-shadow: inset 0 0 0 18px #3d2b1d, inset 0 0 0 22px #24190f, inset 0 0 180px rgba(0,0,0,0.65); color: #ecebe4; font-family: 'Patrick Hand', cursive; text-shadow: 0 0 1px rgba(236,235,228,0.55), 0 0 8px rgba(236,235,228,0.12); box-sizing: border-box; padding: var(--pad-top) var(--pad-x) var(--pad-bottom); display: flex; flex-direction: column; justify-content: center;">
+  <div style="font-size: var(--type-subtitle); color: oklch(0.87 0.1 95);">Treinamento PHP</div>
+  <h1 style="margin: 0; font-family: 'Cabin Sketch', cursive; font-weight: 700; font-size: var(--type-hero); line-height: 1;">&lt;?php</h1>
+  <div style="font-family: 'Cabin Sketch', cursive; font-size: 76px; line-height: 1.1;">Boas práticas com SOLID, PSRs e Docker</div>
+  <div style="height: 4px; width: 720px; background: rgba(236,235,228,0.55); border-radius: 4px; transform: rotate(-0.5deg); margin-top: 40px;"></div>
+  <div style="font-size: var(--type-body); color: oklch(0.85 0.08 225); margin-top: 32px;">Vinicius</div>
+</section>
+
+<section data-label="01 SOLID" data-speaker-notes="Primeira parte: os cinco princípios SOLID." style="background: radial-gradient(ellipse 60% 50% at 25% 30%, rgba(255,255,255,0.05), transparent 70%), radial-gradient(ellipse 50% 60% at 80% 75%, rgba(255,255,255,0.035), transparent 70%), #151716; box-shadow: inset 0 0 0 18px #3d2b1d, inset 0 0 0 22px #24190f, inset 0 0 180px rgba(0,0,0,0.65); color: #ecebe4; font-family: 'Patrick Hand', cursive; text-shadow: 0 0 1px rgba(236,235,228,0.55), 0 0 8px rgba(236,235,228,0.12); box-sizing: border-box; padding: var(--pad-top) var(--pad-x) var(--pad-bottom); display: flex; flex-direction: column; justify-content: center;">
+  <div style="font-family: 'Cabin Sketch', cursive; font-weight: 700; font-size: 120px; line-height: 1; color: oklch(0.87 0.1 95);">01</div>
+  <h2 style="margin: 0; font-family: 'Cabin Sketch', cursive; font-weight: 700; font-size: var(--type-section); line-height: 1;">SOLID</h2>
+  <div style="font-size: var(--type-subtitle); color: oklch(0.85 0.08 225); margin-top: 24px;">Cinco princípios para código orientado a objetos</div>
+</section>
+
+<section data-label="O que é SOLID" data-speaker-notes="SOLID é um acrônimo. Cada letra é um princípio. Não são regras rígidas, são guias para deixar o código mais fácil de manter e testar." style="background: radial-gradient(ellipse 60% 50% at 25% 30%, rgba(255,255,255,0.05), transparent 70%), radial-gradient(ellipse 50% 60% at 80% 75%, rgba(255,255,255,0.035), transparent 70%), #151716; box-shadow: inset 0 0 0 18px #3d2b1d, inset 0 0 0 22px #24190f, inset 0 0 180px rgba(0,0,0,0.65); color: #ecebe4; font-family: 'Patrick Hand', cursive; text-shadow: 0 0 1px rgba(236,235,228,0.55), 0 0 8px rgba(236,235,228,0.12); box-sizing: border-box; padding: var(--pad-top) var(--pad-x) var(--pad-bottom); display: flex; flex-direction: column;">
+  <h2 style="margin: 0; font-family: 'Cabin Sketch', cursive; font-weight: 700; font-size: var(--type-title); line-height: 1.05;">O que é SOLID</h2>
+  <div style="height: 4px; width: 100%; background: rgba(236,235,228,0.55); border-radius: 4px; transform: rotate(-0.4deg); margin-top: 24px;"></div>
+  <p style="margin: var(--gap-title) 0 0; font-size: var(--type-body); line-height: 1.35; max-width: 1400px; text-wrap: pretty;">Um conjunto de cinco princípios de design orientado a objetos, popularizado por Robert C. Martin (Uncle Bob). O objetivo é ter código mais fácil de entender, testar e alterar.</p>
+  <div style="flex: 1; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 32px; align-items: center;">
+    <div style="display: flex; flex-direction: column; gap: 12px; border: 2px dashed rgba(236,235,228,0.35); border-radius: 18px; padding: 36px 28px;">
+      <div style="font-family: 'Cabin Sketch', cursive; font-weight: 700; font-size: 150px; line-height: 0.9; color: oklch(0.87 0.1 95);">S</div>
+      <div style="font-size: var(--type-small); line-height: 1.2;">Single Responsibility</div>
+      <div style="font-size: var(--type-small); line-height: 1.2; color: oklch(0.85 0.08 225);">Responsabilidade Única</div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 12px; border: 2px dashed rgba(236,235,228,0.35); border-radius: 18px; padding: 36px 28px;">
+      <div style="font-family: 'Cabin Sketch', cursive; font-weight: 700; font-size: 150px; line-height: 0.9; color: oklch(0.87 0.1 95);">O</div>
+      <div style="font-size: var(--type-small); line-height: 1.2;">Open/Closed</div>
+      <div style="font-size: var(--type-small); line-height: 1.2; color: oklch(0.85 0.08 225);">Aberto/Fechado</div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 12px; border: 2px dashed rgba(236,235,228,0.35); border-radius: 18px; padding: 36px 28px;">
+      <div style="font-family: 'Cabin Sketch', cursive; font-weight: 700; font-size: 150px; line-height: 0.9; color: oklch(0.87 0.1 95);">L</div>
+      <div style="font-size: var(--type-small); line-height: 1.2;">Liskov Substitution</div>
+      <div style="font-size: var(--type-small); line-height: 1.2; color: oklch(0.85 0.08 225);">Substituição de Liskov</div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 12px; border: 2px dashed rgba(236,235,228,0.35); border-radius: 18px; padding: 36px 28px;">
+      <div style="font-family: 'Cabin Sketch', cursive; font-weight: 700; font-size: 150px; line-height: 0.9; color: oklch(0.87 0.1 95);">I</div>
+      <div style="font-size: var(--type-small); line-height: 1.2;">Interface Segregation</div>
+      <div style="font-size: var(--type-small); line-height: 1.2; color: oklch(0.85 0.08 225);">Segregação de Interfaces</div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 12px; border: 2px dashed rgba(236,235,228,0.35); border-radius: 18px; padding: 36px 28px;">
+      <div style="font-family: 'Cabin Sketch', cursive; font-weight: 700; font-size: 150px; line-height: 0.9; color: oklch(0.87 0.1 95);">D</div>
+      <div style="font-size: var(--type-small); line-height: 1.2;">Dependency Inversion</div>
+      <div style="font-size: var(--type-small); line-height: 1.2; color: oklch(0.85 0.08 225);">Inversão de Dependência</div>
+    </div>
+  </div>
+</section>
+
+<section data-label="S" data-speaker-notes="Mostrar a classe Relatorio fazendo três coisas. Perguntar: quantos motivos essa classe tem para mudar? Depois mostrar a versão separada." style="background: radial-gradient(ellipse 60% 50% at 25% 30%, rgba(255,255,255,0.05), transparent 70%), radial-gradient(ellipse 50% 60% at 80% 75%, rgba(255,255,255,0.035), transparent 70%), #151716; box-shadow: inset 0 0 0 18px #3d2b1d, inset 0 0 0 22px #24190f, inset 0 0 180px rgba(0,0,0,0.65); color: #ecebe4; font-family: 'Patrick Hand', cursive; text-shadow: 0 0 1px rgba(236,235,228,0.55), 0 0 8px rgba(236,235,228,0.12); box-sizing: border-box; padding: var(--pad-top) var(--pad-x) var(--pad-bottom); display: flex; flex-direction: column;">
+  <div style="display: flex; align-items: center; gap: 36px;">
+    <div style="font-family: 'Cabin Sketch', cursive; font-weight: 700; font-size: 160px; line-height: 0.85; color: oklch(0.87 0.1 95);">S</div>
+    <div style="display: flex; flex-direction: column; gap: 6px;">
+      <h2 style="margin: 0; font-family: 'Cabin Sketch', cursive; font-weight: 700; font-size: var(--type-title); line-height: 1.05;">Single Responsibility Principle</h2>
+      <div style="font-size: var(--type-subtitle); color: oklch(0.85 0.08 225);">(Princípio da Responsabilidade Única)</div>
+    </div>
+  </div>
+  <div style="height: 4px; width: 100%; background: rgba(236,235,228,0.55); border-radius: 4px; transform: rotate(-0.4deg); margin-top: 24px;"></div>
+  <div style="flex: 1; min-height: 0; display: grid; grid-template-columns: 500px minmax(0, 1fr); gap: 64px; margin-top: var(--gap-title); align-items: start;">
+    <div style="display: flex; flex-direction: column; gap: var(--gap-item);">
+      <p style="margin: 0; font-size: var(--type-body); line-height: 1.3; text-wrap: pretty;">Uma classe deve ter apenas um motivo para mudar. Se ela gera, salva e envia o relatório, qualquer mudança em uma dessas tarefas mexe na classe inteira.</p>
+      <div style="font-size: var(--type-small); color: oklch(0.87 0.1 95);">Dica</div>
+      <p style="margin: 0; font-size: var(--type-small); line-height: 1.3; text-wrap: pretty;">Se para descrever a classe você usa "e" (gera e salva e envia), ela provavelmente faz coisas demais.</p>
+    </div>
+    <pre style="margin: 0; font-family: 'JetBrains Mono', monospace; font-size: var(--type-code); line-height: 1.42; white-space: pre; color: #ecebe4; text-shadow: none; border: 2px dashed rgba(236,235,228,0.35); border-radius: 14px; padding: 28px 36px; background: rgba(255,255,255,0.025); overflow: hidden;"><span style="color: oklch(0.82 0.1 15);">// Errado: uma classe com três responsabilidades</span>
+class Relatorio {
+    public function gerar(): string { /* ... */ }
+    public function salvarPdf(string $texto): void { /* ... */ }
+    public function enviarEmail(string $para): void { /* ... */ }
+}
+
+<span style="color: oklch(0.86 0.09 150);">// Certo: cada classe cuida de uma tarefa</span>
+class Relatorio {
+    public function gerar(): string { /* ... */ }
+}
+class ExportadorPdf {
+    public function salvar(string $texto): void { /* ... */ }
+}
+class EnviadorEmail {
+    public function enviar(string $para): void { /* ... */ }
+}</pre>
+  </div>
+</section>
+
+<section data-label="O" data-speaker-notes="O if/elseif cresce a cada desconto novo. Com a interface, cada desconto é uma classe nova e o Carrinho nunca é alterado." style="background: radial-gradient(ellipse 60% 50% at 25% 30%, rgba(255,255,255,0.05), transparent 70%), radial-gradient(ellipse 50% 60% at 80% 75%, rgba(255,255,255,0.035), transparent 70%), #151716; box-shadow: inset 0 0 0 18px #3d2b1d, inset 0 0 0 22px #24190f, inset 0 0 180px rgba(0,0,0,0.65); color: #ecebe4; font-family: 'Patrick Hand', cursive; text-shadow: 0 0 1px rgba(236,235,228,0.55), 0 0 8px rgba(236,235,228,0.12); box-sizing: border-box; padding: var(--pad-top) var(--pad-x) var(--pad-bottom); display: flex; flex-direction: column;">
+  <div style="display: flex; align-items: center; gap: 36px;">
+    <div style="font-family: 'Cabin Sketch', cursive; font-weight: 700; font-size: 160px; line-height: 0.85; color: oklch(0.87 0.1 95);">O</div>
+    <div style="display: flex; flex-direction: column; gap: 6px;">
+      <h2 style="margin: 0; font-family: 'Cabin Sketch', cursive; font-weight: 700; font-size: var(--type-title); line-height: 1.05;">Open/Closed Principle</h2>
+      <div style="font-size: var(--type-subtitle); color: oklch(0.85 0.08 225);">(Princípio Aberto/Fechado)</div>
+    </div>
+  </div>
+  <div style="height: 4px; width: 100%; background: rgba(236,235,228,0.55); border-radius: 4px; transform: rotate(-0.4deg); margin-top: 24px;"></div>
+  <div style="flex: 1; min-height: 0; display: grid; grid-template-columns: 500px minmax(0, 1fr); gap: 64px; margin-top: var(--gap-title); align-items: start;">
+    <div style="display: flex; flex-direction: column; gap: var(--gap-item);">
+      <p style="margin: 0; font-size: var(--type-body); line-height: 1.3; text-wrap: pretty;">Aberto para extensão, fechado para modificação. Para adicionar um comportamento novo, você cria código novo em vez de editar o que já funciona.</p>
+      <div style="font-size: var(--type-small); color: oklch(0.87 0.1 95);">Dica</div>
+      <p style="margin: 0; font-size: var(--type-small); line-height: 1.3; text-wrap: pretty;">Um if/elseif que cresce a cada novidade é sinal de que falta uma interface.</p>
+    </div>
+    <pre style="margin: 0; font-family: 'JetBrains Mono', monospace; font-size: var(--type-code); line-height: 1.42; white-space: pre; color: #ecebe4; text-shadow: none; border: 2px dashed rgba(236,235,228,0.35); border-radius: 14px; padding: 28px 36px; background: rgba(255,255,255,0.025); overflow: hidden;"><span style="color: oklch(0.82 0.1 15);">// Errado: todo desconto novo exige editar este if</span>
+if ($tipo === 'blackfriday') { $total *= 0.7; }
+elseif ($tipo === 'cupom10') { $total -= 10; }
+
+<span style="color: oklch(0.86 0.09 150);">// Certo: cada desconto é uma classe</span>
+interface Desconto {
+    public function aplicar(float $total): float;
+}
+class DescontoBlackFriday implements Desconto {
+    public function aplicar(float $total): float {
+        return $total * 0.7;
+    }
+}
+<span style="color: oklch(0.85 0.08 225);">// Novo desconto? Crie outra classe. O Carrinho não muda.</span>
+class Carrinho {
+    public function total(float $valor, Desconto $desconto): float {
+        return $desconto-&gt;aplicar($valor);
+    }
+}</pre>
+  </div>
+</section>
+
+<section data-label="L" data-speaker-notes="Exemplo clássico das aves. Se Pinguim herdasse de AveQueVoa, a função soltar() quebraria. A solução é modelar a herança corretamente." style="background: radial-gradient(ellipse 60% 50% at 25% 30%, rgba(255,255,255,0.05), transparent 70%), radial-gradient(ellipse 50% 60% at 80% 75%, rgba(255,255,255,0.035), transparent 70%), #151716; box-shadow: inset 0 0 0 18px #3d2b1d, inset 0 0 0 22px #24190f, inset 0 0 180px rgba(0,0,0,0.65); color: #ecebe4; font-family: 'Patrick Hand', cursive; text-shadow: 0 0 1px rgba(236,235,228,0.55), 0 0 8px rgba(236,235,228,0.12); box-sizing: border-box; padding: var(--pad-top) var(--pad-x) var(--pad-bottom); display: flex; flex-direction: column;">
+  <div style="display: flex; align-items: center; gap: 36px;">
+    <div style="font-family: 'Cabin Sketch', cursive; font-weight: 700; font-size: 160px; line-height: 0.85; color: oklch(0.87 0.1 95);">L</div>
+    <div style="display: flex; flex-direction: column; gap: 6px;">
+      <h2 style="margin: 0; font-family: 'Cabin Sketch', cursive; font-weight: 700; font-size: var(--type-title); line-height: 1.05;">Liskov Substitution Principle</h2>
+      <div style="font-size: var(--type-subtitle); color: oklch(0.85 0.08 225);">(Princípio da Substituição de Liskov)</div>
+    </div>
+  </div>
+  <div style="height: 4px; width: 100%; background: rgba(236,235,228,0.55); border-radius: 4px; transform: rotate(-0.4deg); margin-top: 24px;"></div>
+  <div style="flex: 1; min-height: 0; display: grid; grid-template-columns: 500px minmax(0, 1fr); gap: 64px; margin-top: var(--gap-title); align-items: start;">
+    <div style="display: flex; flex-direction: column; gap: var(--gap-item);">
+      <p style="margin: 0; font-size: var(--type-body); line-height: 1.3; text-wrap: pretty;">Uma classe filha deve poder substituir a classe pai sem quebrar o programa. Quem usa o pai não pode ter surpresas com o filho.</p>
+      <div style="font-size: var(--type-small); color: oklch(0.87 0.1 95);">Dica</div>
+      <p style="margin: 0; font-size: var(--type-small); line-height: 1.3; text-wrap: pretty;">Se o filho precisa lançar exceção ou deixar um método vazio para "desligar" algo do pai, a herança está errada.</p>
+    </div>
+    <pre style="margin: 0; font-family: 'JetBrains Mono', monospace; font-size: var(--type-code); line-height: 1.42; white-space: pre; color: #ecebe4; text-shadow: none; border: 2px dashed rgba(236,235,228,0.35); border-radius: 14px; padding: 28px 36px; background: rgba(255,255,255,0.025); overflow: hidden;">class Ave {
+    public function comer(): void { /* ... */ }
+}
+class AveQueVoa extends Ave {
+    public function voar(): void { /* ... */ }
+}
+class Pardal extends AveQueVoa { }
+class Pinguim extends Ave { } <span style="color: oklch(0.85 0.08 225);">// pinguim não voa</span>
+
+function soltar(AveQueVoa $ave): void {
+    $ave-&gt;voar(); <span style="color: oklch(0.86 0.09 150);">// qualquer AveQueVoa funciona aqui</span>
+}
+
+<span style="color: oklch(0.82 0.1 15);">// Errado: Pinguim extends AveQueVoa com um voar()
+// que lança exceção. soltar(new Pinguim) quebraria.</span></pre>
+  </div>
+</section>
+
+<section data-label="I" data-speaker-notes="Uma impressora simples não deveria ser obrigada a implementar digitalizar() e enviarFax(). Interfaces pequenas deixam cada classe implementar só o que faz." style="background: radial-gradient(ellipse 60% 50% at 25% 30%, rgba(255,255,255,0.05), transparent 70%), radial-gradient(ellipse 50% 60% at 80% 75%, rgba(255,255,255,0.035), transparent 70%), #151716; box-shadow: inset 0 0 0 18px #3d2b1d, inset 0 0 0 22px #24190f, inset 0 0 180px rgba(0,0,0,0.65); color: #ecebe4; font-family: 'Patrick Hand', cursive; text-shadow: 0 0 1px rgba(236,235,228,0.55), 0 0 8px rgba(236,235,228,0.12); box-sizing: border-box; padding: var(--pad-top) var(--pad-x) var(--pad-bottom); display: flex; flex-direction: column;">
+  <div style="display: flex; align-items: center; gap: 36px;">
+    <div style="font-family: 'Cabin Sketch', cursive; font-weight: 700; font-size: 160px; line-height: 0.85; color: oklch(0.87 0.1 95);">I</div>
+    <div style="display: flex; flex-direction: column; gap: 6px;">
+      <h2 style="margin: 0; font-family: 'Cabin Sketch', cursive; font-weight: 700; font-size: var(--type-title); line-height: 1.05;">Interface Segregation Principle</h2>
+      <div style="font-size: var(--type-subtitle); color: oklch(0.85 0.08 225);">(Princípio da Segregação de Interfaces)</div>
+    </div>
+  </div>
+  <div style="height: 4px; width: 100%; background: rgba(236,235,228,0.55); border-radius: 4px; transform: rotate(-0.4deg); margin-top: 24px;"></div>
+  <div style="flex: 1; min-height: 0; display: grid; grid-template-columns: 500px minmax(0, 1fr); gap: 64px; margin-top: var(--gap-title); align-items: start;">
+    <div style="display: flex; flex-direction: column; gap: var(--gap-item);">
+      <p style="margin: 0; font-size: var(--type-body); line-height: 1.3; text-wrap: pretty;">Nenhuma classe deve ser obrigada a implementar métodos que não usa. Prefira várias interfaces pequenas a uma interface grande.</p>
+      <div style="font-size: var(--type-small); color: oklch(0.87 0.1 95);">Dica</div>
+      <p style="margin: 0; font-size: var(--type-small); line-height: 1.3; text-wrap: pretty;">Métodos implementados vazios ou só com throw indicam uma interface grande demais.</p>
+    </div>
+    <pre style="margin: 0; font-family: 'JetBrains Mono', monospace; font-size: var(--type-code); line-height: 1.42; white-space: pre; color: #ecebe4; text-shadow: none; border: 2px dashed rgba(236,235,228,0.35); border-radius: 14px; padding: 28px 36px; background: rgba(255,255,255,0.025); overflow: hidden;"><span style="color: oklch(0.82 0.1 15);">// Errado: toda impressora precisa digitalizar e ter fax</span>
+interface MaquinaEscritorio {
+    public function imprimir(): void;
+    public function digitalizar(): void;
+    public function enviarFax(): void;
+}
+
+<span style="color: oklch(0.86 0.09 150);">// Certo: interfaces pequenas e específicas</span>
+interface Impressora { public function imprimir(): void; }
+interface Scanner    { public function digitalizar(): void; }
+
+class ImpressoraSimples implements Impressora {
+    public function imprimir(): void { /* ... */ }
+}
+class Multifuncional implements Impressora, Scanner {
+    public function imprimir(): void { /* ... */ }
+    public function digitalizar(): void { /* ... */ }
+}</pre>
+  </div>
+</section>
+
+<section data-label="D" data-speaker-notes="PedidoService recebe um Logger pelo construtor. Podemos passar ArquivoLogger, um logger de banco ou um falso para testes, sem mudar o serviço." style="background: radial-gradient(ellipse 60% 50% at 25% 30%, rgba(255,255,255,0.05), transparent 70%), radial-gradient(ellipse 50% 60% at 80% 75%, rgba(255,255,255,0.035), transparent 70%), #151716; box-shadow: inset 0 0 0 18px #3d2b1d, inset 0 0 0 22px #24190f, inset 0 0 180px rgba(0,0,0,0.65); color: #ecebe4; font-family: 'Patrick Hand', cursive; text-shadow: 0 0 1px rgba(236,235,228,0.55), 0 0 8px rgba(236,235,228,0.12); box-sizing: border-box; padding: var(--pad-top) var(--pad-x) var(--pad-bottom); display: flex; flex-direction: column;">
+  <div style="display: flex; align-items: center; gap: 36px;">
+    <div style="font-family: 'Cabin Sketch', cursive; font-weight: 700; font-size: 160px; line-height: 0.85; color: oklch(0.87 0.1 95);">D</div>
+    <div style="display: flex; flex-direction: column; gap: 6px;">
+      <h2 style="margin: 0; font-family: 'Cabin Sketch', cursive; font-weight: 700; font-size: var(--type-title); line-height: 1.05;">Dependency Inversion Principle</h2>
+      <div style="font-size: var(--type-subtitle); color: oklch(0.85 0.08 225);">(Princípio da Inversão de Dependência)</div>
+    </div>
+  </div>
+  <div style="height: 4px; width: 100%; background: rgba(236,235,228,0.55); border-radius: 4px; transform: rotate(-0.4deg); margin-top: 24px;"></div>
+  <div style="flex: 1; min-height: 0; display: grid; grid-template-columns: 500px minmax(0, 1fr); gap: 64px; margin-top: var(--gap-title); align-items: start;">
+    <div style="display: flex; flex-direction: column; gap: var(--gap-item);">
+      <p style="margin: 0; font-size: var(--type-body); line-height: 1.3; text-wrap: pretty;">Classes de alto nível não devem depender de classes concretas, e sim de abstrações (interfaces). Assim fica fácil trocar a implementação.</p>
+      <div style="font-size: var(--type-small); color: oklch(0.87 0.1 95);">Dica</div>
+      <p style="margin: 0; font-size: var(--type-small); line-height: 1.3; text-wrap: pretty;">Trocar ArquivoLogger por um logger de banco de dados não exige nenhuma mudança no PedidoService.</p>
+    </div>
+    <pre style="margin: 0; font-family: 'JetBrains Mono', monospace; font-size: var(--type-code); line-height: 1.42; white-space: pre; color: #ecebe4; text-shadow: none; border: 2px dashed rgba(236,235,228,0.35); border-radius: 14px; padding: 28px 36px; background: rgba(255,255,255,0.025); overflow: hidden;">interface Logger {
+    public function registrar(string $msg): void;
+}
+class ArquivoLogger implements Logger {
+    public function registrar(string $msg): void {
+        file_put_contents('app.log', $msg . PHP_EOL, FILE_APPEND);
+    }
+}
+class PedidoService {
+    private Logger $logger;
+    <span style="color: oklch(0.86 0.09 150);">// Depende da interface, não da classe concreta</span>
+    public function __construct(Logger $logger) {
+        $this-&gt;logger = $logger;
+    }
+    public function finalizar(int $id): void {
+        $this-&gt;logger-&gt;registrar("Pedido $id finalizado");
+    }
+}</pre>
+  </div>
+</section>
+
+<section data-label="02 PSRs" data-speaker-notes="Segunda parte: padrões da comunidade PHP." style="background: radial-gradient(ellipse 60% 50% at 25% 30%, rgba(255,255,255,0.05), transparent 70%), radial-gradient(ellipse 50% 60% at 80% 75%, rgba(255,255,255,0.035), transparent 70%), #151716; box-shadow: inset 0 0 0 18px #3d2b1d, inset 0 0 0 22px #24190f, inset 0 0 180px rgba(0,0,0,0.65); color: #ecebe4; font-family: 'Patrick Hand', cursive; text-shadow: 0 0 1px rgba(236,235,228,0.55), 0 0 8px rgba(236,235,228,0.12); box-sizing: border-box; padding: var(--pad-top) var(--pad-x) var(--pad-bottom); display: flex; flex-direction: column; justify-content: center;">
+  <div style="font-family: 'Cabin Sketch', cursive; font-weight: 700; font-size: 120px; line-height: 1; color: oklch(0.87 0.1 95);">02</div>
+  <h2 style="margin: 0; font-family: 'Cabin Sketch', cursive; font-weight: 700; font-size: var(--type-section); line-height: 1;">PSRs</h2>
+  <div style="font-size: var(--type-subtitle); color: oklch(0.85 0.08 225); margin-top: 24px;">Padrões recomendados pela comunidade PHP</div>
+</section>
+
+<section data-label="O que são PSRs" data-speaker-notes="PSR é uma recomendação, não uma obrigação da linguagem. Mas quase todo projeto moderno segue. Hoje vamos focar na PSR-1." style="background: radial-gradient(ellipse 60% 50% at 25% 30%, rgba(255,255,255,0.05), transparent 70%), radial-gradient(ellipse 50% 60% at 80% 75%, rgba(255,255,255,0.035), transparent 70%), #151716; box-shadow: inset 0 0 0 18px #3d2b1d, inset 0 0 0 22px #24190f, inset 0 0 180px rgba(0,0,0,0.65); color: #ecebe4; font-family: 'Patrick Hand', cursive; text-shadow: 0 0 1px rgba(236,235,228,0.55), 0 0 8px rgba(236,235,228,0.12); box-sizing: border-box; padding: var(--pad-top) var(--pad-x) var(--pad-bottom); display: flex; flex-direction: column;">
+  <h2 style="margin: 0; font-family: 'Cabin Sketch', cursive; font-weight: 700; font-size: var(--type-title); line-height: 1.05;">O que são PSRs</h2>
+  <div style="height: 4px; width: 100%; background: rgba(236,235,228,0.55); border-radius: 4px; transform: rotate(-0.4deg); margin-top: 24px;"></div>
+  <div style="flex: 1; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 100px; align-items: center;">
+    <div style="display: flex; flex-direction: column; gap: var(--gap-item);">
+      <div style="font-family: 'Cabin Sketch', cursive; font-weight: 700; font-size: 110px; line-height: 1; color: oklch(0.87 0.1 95);">PSR</div>
+      <div style="font-size: var(--type-subtitle); color: oklch(0.85 0.08 225);">PHP Standards Recommendation</div>
+      <p style="margin: 0; font-size: var(--type-body); line-height: 1.35; text-wrap: pretty;">Recomendações publicadas pelo PHP-FIG (PHP Framework Interop Group) para padronizar como escrevemos e organizamos código PHP.</p>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 40px;">
+      <div style="font-size: var(--type-small); color: oklch(0.87 0.1 95);">Por que seguir</div>
+      <div style="display: grid; grid-template-columns: 70px minmax(0, 1fr); gap: 20px; align-items: baseline;">
+        <div style="font-family: 'Cabin Sketch', cursive; font-weight: 700; font-size: 48px; color: oklch(0.87 0.1 95);">1</div>
+        <div style="font-size: var(--type-body); line-height: 1.3;">Qualquer dev PHP lê o seu código sem estranhar</div>
+      </div>
+      <div style="display: grid; grid-template-columns: 70px minmax(0, 1fr); gap: 20px; align-items: baseline;">
+        <div style="font-family: 'Cabin Sketch', cursive; font-weight: 700; font-size: 48px; color: oklch(0.87 0.1 95);">2</div>
+        <div style="font-size: var(--type-body); line-height: 1.3;">Bibliotecas e frameworks funcionam bem juntos</div>
+      </div>
+      <div style="display: grid; grid-template-columns: 70px minmax(0, 1fr); gap: 20px; align-items: baseline;">
+        <div style="font-family: 'Cabin Sketch', cursive; font-weight: 700; font-size: 48px; color: oklch(0.87 0.1 95);">3</div>
+        <div style="font-size: var(--type-body); line-height: 1.3;">Ferramentas como PHP_CodeSniffer verificam o padrão automaticamente</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section data-label="PSR-1 Regras" data-speaker-notes="Passar regra por regra. A regra 3 (declarar OU executar) costuma gerar dúvida: um arquivo de classe não deve ter echo, ini_set etc." style="background: radial-gradient(ellipse 60% 50% at 25% 30%, rgba(255,255,255,0.05), transparent 70%), radial-gradient(ellipse 50% 60% at 80% 75%, rgba(255,255,255,0.035), transparent 70%), #151716; box-shadow: inset 0 0 0 18px #3d2b1d, inset 0 0 0 22px #24190f, inset 0 0 180px rgba(0,0,0,0.65); color: #ecebe4; font-family: 'Patrick Hand', cursive; text-shadow: 0 0 1px rgba(236,235,228,0.55), 0 0 8px rgba(236,235,228,0.12); box-sizing: border-box; padding: var(--pad-top) var(--pad-x) var(--pad-bottom); display: flex; flex-direction: column;">
+  <div style="display: flex; align-items: baseline; gap: 28px;">
+    <h2 style="margin: 0; font-family: 'Cabin Sketch', cursive; font-weight: 700; font-size: var(--type-title); line-height: 1.05;">PSR-1: Basic Coding Standard</h2>
+    <div style="font-size: var(--type-subtitle); color: oklch(0.85 0.08 225);">(Padrão Básico de Codificação)</div>
+  </div>
+  <div style="height: 4px; width: 100%; background: rgba(236,235,228,0.55); border-radius: 4px; transform: rotate(-0.4deg); margin-top: 24px;"></div>
+  <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; margin-top: 24px;">
+    <div style="display: grid; grid-template-columns: 60px minmax(0, 1fr) 560px; gap: 32px; align-items: center; padding: 16px 0; border-bottom: 2px dashed rgba(236,235,228,0.2);">
+      <div style="font-family: 'Cabin Sketch', cursive; font-weight: 700; font-size: 44px; color: oklch(0.87 0.1 95);">1</div>
+      <div style="font-size: var(--type-body);">Use somente as tags &lt;?php ou &lt;?=</div>
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: var(--type-code); color: oklch(0.86 0.09 150); text-shadow: none;">&lt;?php</div>
+    </div>
+    <div style="display: grid; grid-template-columns: 60px minmax(0, 1fr) 560px; gap: 32px; align-items: center; padding: 16px 0; border-bottom: 2px dashed rgba(236,235,228,0.2);">
+      <div style="font-family: 'Cabin Sketch', cursive; font-weight: 700; font-size: 44px; color: oklch(0.87 0.1 95);">2</div>
+      <div style="font-size: var(--type-body);">Arquivos em UTF-8 sem BOM</div>
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: var(--type-code); color: oklch(0.86 0.09 150); text-shadow: none;">UTF-8</div>
+    </div>
+    <div style="display: grid; grid-template-columns: 60px minmax(0, 1fr) 560px; gap: 32px; align-items: center; padding: 16px 0; border-bottom: 2px dashed rgba(236,235,228,0.2);">
+      <div style="font-family: 'Cabin Sketch', cursive; font-weight: 700; font-size: 44px; color: oklch(0.87 0.1 95);">3</div>
+      <div style="font-size: var(--type-body);">Um arquivo declara classes e funções OU executa código, nunca os dois</div>
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: var(--type-code); color: oklch(0.86 0.09 150); text-shadow: none;">class Usuario { } / echo 'oi';</div>
+    </div>
+    <div style="display: grid; grid-template-columns: 60px minmax(0, 1fr) 560px; gap: 32px; align-items: center; padding: 16px 0; border-bottom: 2px dashed rgba(236,235,228,0.2);">
+      <div style="font-family: 'Cabin Sketch', cursive; font-weight: 700; font-size: 44px; color: oklch(0.87 0.1 95);">4</div>
+      <div style="font-size: var(--type-body);">Namespaces e classes seguem o padrão de autoload (PSR-4)</div>
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: var(--type-code); color: oklch(0.86 0.09 150); text-shadow: none;">App\Model\Usuario</div>
+    </div>
+    <div style="display: grid; grid-template-columns: 60px minmax(0, 1fr) 560px; gap: 32px; align-items: center; padding: 16px 0; border-bottom: 2px dashed rgba(236,235,228,0.2);">
+      <div style="font-family: 'Cabin Sketch', cursive; font-weight: 700; font-size: 44px; color: oklch(0.87 0.1 95);">5</div>
+      <div style="font-size: var(--type-body);">Nomes de classes em StudlyCaps (PascalCase)</div>
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: var(--type-code); color: oklch(0.86 0.09 150); text-shadow: none;">ContaBancaria</div>
+    </div>
+    <div style="display: grid; grid-template-columns: 60px minmax(0, 1fr) 560px; gap: 32px; align-items: center; padding: 16px 0; border-bottom: 2px dashed rgba(236,235,228,0.2);">
+      <div style="font-family: 'Cabin Sketch', cursive; font-weight: 700; font-size: 44px; color: oklch(0.87 0.1 95);">6</div>
+      <div style="font-size: var(--type-body);">Constantes em maiúsculas, separadas por underline</div>
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: var(--type-code); color: oklch(0.86 0.09 150); text-shadow: none;">TAXA_SAQUE</div>
+    </div>
+    <div style="display: grid; grid-template-columns: 60px minmax(0, 1fr) 560px; gap: 32px; align-items: center; padding: 16px 0;">
+      <div style="font-family: 'Cabin Sketch', cursive; font-weight: 700; font-size: 44px; color: oklch(0.87 0.1 95);">7</div>
+      <div style="font-size: var(--type-body);">Métodos em camelCase</div>
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: var(--type-code); color: oklch(0.86 0.09 150); text-shadow: none;">depositar()</div>
+    </div>
+  </div>
+</section>
+
+<section data-label="PSR-1 Exemplo" data-speaker-notes="Mostrar como as regras aparecem em uma classe real. Arquivo só declara a classe, sem echo." style="background: radial-gradient(ellipse 60% 50% at 25% 30%, rgba(255,255,255,0.05), transparent 70%), radial-gradient(ellipse 50% 60% at 80% 75%, rgba(255,255,255,0.035), transparent 70%), #151716; box-shadow: inset 0 0 0 18px #3d2b1d, inset 0 0 0 22px #24190f, inset 0 0 180px rgba(0,0,0,0.65); color: #ecebe4; font-family: 'Patrick Hand', cursive; text-shadow: 0 0 1px rgba(236,235,228,0.55), 0 0 8px rgba(236,235,228,0.12); box-sizing: border-box; padding: var(--pad-top) var(--pad-x) var(--pad-bottom); display: flex; flex-direction: column;">
+  <h2 style="margin: 0; font-family: 'Cabin Sketch', cursive; font-weight: 700; font-size: var(--type-title); line-height: 1.05;">PSR-1 na Prática</h2>
+  <div style="height: 4px; width: 100%; background: rgba(236,235,228,0.55); border-radius: 4px; transform: rotate(-0.4deg); margin-top: 24px;"></div>
+  <div style="flex: 1; min-height: 0; display: grid; grid-template-columns: 560px minmax(0, 1fr); gap: 64px; margin-top: var(--gap-title); align-items: center;">
+    <div style="display: flex; flex-direction: column; gap: 36px;">
+      <div style="display: flex; flex-direction: column; gap: 4px;">
+        <div style="font-size: var(--type-small); color: oklch(0.87 0.1 95);">Tag e namespace</div>
+        <div style="font-size: var(--type-body); line-height: 1.25;">Abre com &lt;?php e o namespace segue a pasta</div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 4px;">
+        <div style="font-size: var(--type-small); color: oklch(0.87 0.1 95);">Classe</div>
+        <div style="font-size: var(--type-body); line-height: 1.25;">ContaBancaria em StudlyCaps</div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 4px;">
+        <div style="font-size: var(--type-small); color: oklch(0.87 0.1 95);">Constante</div>
+        <div style="font-size: var(--type-body); line-height: 1.25;">TAXA_SAQUE em maiúsculas</div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 4px;">
+        <div style="font-size: var(--type-small); color: oklch(0.87 0.1 95);">Métodos</div>
+        <div style="font-size: var(--type-body); line-height: 1.25;">depositar() e sacar() em camelCase</div>
+      </div>
+    </div>
+    <pre style="margin: 0; font-family: 'JetBrains Mono', monospace; font-size: var(--type-code); line-height: 1.42; white-space: pre; color: #ecebe4; text-shadow: none; border: 2px dashed rgba(236,235,228,0.35); border-radius: 14px; padding: 28px 36px; background: rgba(255,255,255,0.025); overflow: hidden;">&lt;?php
+<span style="color: oklch(0.85 0.08 225);">// src/Model/ContaBancaria.php</span>
+namespace App\Model;
+
+class ContaBancaria
+{
+    const TAXA_SAQUE = 2.5;
+
+    private float $saldo = 0;
+
+    public function depositar(float $valor): void
+    {
+        $this-&gt;saldo += $valor;
+    }
+
+    public function sacar(float $valor): void
+    {
+        $this-&gt;saldo -= $valor + self::TAXA_SAQUE;
+    }
+}</pre>
+  </div>
+</section>
+
+<section data-label="Composer" data-speaker-notes="Composer é o gerenciador de dependências do PHP, como o npm do Node. Mostrar composer.json e o require." style="background: radial-gradient(ellipse 60% 50% at 25% 30%, rgba(255,255,255,0.05), transparent 70%), radial-gradient(ellipse 50% 60% at 80% 75%, rgba(255,255,255,0.035), transparent 70%), #151716; box-shadow: inset 0 0 0 18px #3d2b1d, inset 0 0 0 22px #24190f, inset 0 0 180px rgba(0,0,0,0.65); color: #ecebe4; font-family: 'Patrick Hand', cursive; text-shadow: 0 0 1px rgba(236,235,228,0.55), 0 0 8px rgba(236,235,228,0.12); box-sizing: border-box; padding: var(--pad-top) var(--pad-x) var(--pad-bottom); display: flex; flex-direction: column;">
+  <h2 style="margin: 0; font-family: 'Cabin Sketch', cursive; font-weight: 700; font-size: var(--type-title); line-height: 1.05;">Composer</h2>
+  <div style="height: 4px; width: 100%; background: rgba(236,235,228,0.55); border-radius: 4px; transform: rotate(-0.4deg); margin-top: 24px;"></div>
+  <div style="flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) 780px; gap: 80px; margin-top: var(--gap-title); align-items: center;">
+    <div style="display: flex; flex-direction: column; gap: 36px;">
+      <p style="margin: 0; font-size: var(--type-body); line-height: 1.35; text-wrap: pretty;">O gerenciador de dependências do PHP. Instala bibliotecas de terceiros e gera o autoload que carrega suas classes automaticamente (PSR-4).</p>
+      <div style="display: flex; flex-direction: column; gap: 4px;">
+        <div style="font-size: var(--type-subtitle); color: oklch(0.87 0.1 95);">composer.json</div>
+        <div style="font-size: var(--type-body); line-height: 1.25;">Lista as dependências do projeto e suas versões</div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 4px;">
+        <div style="font-size: var(--type-subtitle); color: oklch(0.87 0.1 95);">vendor/</div>
+        <div style="font-size: var(--type-body); line-height: 1.25;">Pasta onde as bibliotecas instaladas ficam</div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 4px;">
+        <div style="font-size: var(--type-subtitle); color: oklch(0.87 0.1 95);">autoload.php</div>
+        <div style="font-size: var(--type-body); line-height: 1.25;">Um require e todas as classes ficam disponíveis</div>
+      </div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 28px;">
+      <pre style="margin: 0; font-family: 'JetBrains Mono', monospace; font-size: var(--type-code); line-height: 1.42; white-space: pre; color: #ecebe4; text-shadow: none; border: 2px dashed rgba(236,235,228,0.35); border-radius: 14px; padding: 28px 36px; background: rgba(255,255,255,0.025); overflow: hidden;"><span style="color: oklch(0.85 0.08 225);"># Terminal
+</span><span style="color: oklch(0.86 0.09 150);">$</span> composer require monolog/monolog
+<span style="color: oklch(0.86 0.09 150);">$</span> composer install</pre>
+      <pre style="margin: 0; font-family: 'JetBrains Mono', monospace; font-size: var(--type-code); line-height: 1.42; white-space: pre; color: #ecebe4; text-shadow: none; border: 2px dashed rgba(236,235,228,0.35); border-radius: 14px; padding: 28px 36px; background: rgba(255,255,255,0.025); overflow: hidden;">&lt;?php
+require 'vendor/autoload.php';
+
+use Monolog\Logger;
+
+$log = new Logger('app');</pre>
+    </div>
+  </div>
+</section>
+
+<section data-label="03 Docker" data-speaker-notes="Terceira parte: ambiente de desenvolvimento com Docker." style="background: radial-gradient(ellipse 60% 50% at 25% 30%, rgba(255,255,255,0.05), transparent 70%), radial-gradient(ellipse 50% 60% at 80% 75%, rgba(255,255,255,0.035), transparent 70%), #151716; box-shadow: inset 0 0 0 18px #3d2b1d, inset 0 0 0 22px #24190f, inset 0 0 180px rgba(0,0,0,0.65); color: #ecebe4; font-family: 'Patrick Hand', cursive; text-shadow: 0 0 1px rgba(236,235,228,0.55), 0 0 8px rgba(236,235,228,0.12); box-sizing: border-box; padding: var(--pad-top) var(--pad-x) var(--pad-bottom); display: flex; flex-direction: column; justify-content: center;">
+  <div style="font-family: 'Cabin Sketch', cursive; font-weight: 700; font-size: 120px; line-height: 1; color: oklch(0.87 0.1 95);">03</div>
+  <h2 style="margin: 0; font-family: 'Cabin Sketch', cursive; font-weight: 700; font-size: var(--type-section); line-height: 1;">Docker</h2>
+  <div style="font-size: var(--type-subtitle); color: oklch(0.85 0.08 225); margin-top: 24px;">O mesmo ambiente PHP em qualquer máquina</div>
+</section>
+
+<section data-label="O que é Docker" data-speaker-notes="Imagem é a receita, container é a receita rodando. Mostrar que com duas linhas de Dockerfile já temos PHP 7.4 com Apache." style="background: radial-gradient(ellipse 60% 50% at 25% 30%, rgba(255,255,255,0.05), transparent 70%), radial-gradient(ellipse 50% 60% at 80% 75%, rgba(255,255,255,0.035), transparent 70%), #151716; box-shadow: inset 0 0 0 18px #3d2b1d, inset 0 0 0 22px #24190f, inset 0 0 180px rgba(0,0,0,0.65); color: #ecebe4; font-family: 'Patrick Hand', cursive; text-shadow: 0 0 1px rgba(236,235,228,0.55), 0 0 8px rgba(236,235,228,0.12); box-sizing: border-box; padding: var(--pad-top) var(--pad-x) var(--pad-bottom); display: flex; flex-direction: column;">
+  <h2 style="margin: 0; font-family: 'Cabin Sketch', cursive; font-weight: 700; font-size: var(--type-title); line-height: 1.05;">O que é Docker</h2>
+  <div style="height: 4px; width: 100%; background: rgba(236,235,228,0.55); border-radius: 4px; transform: rotate(-0.4deg); margin-top: 24px;"></div>
+  <div style="flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) 820px; gap: 80px; margin-top: var(--gap-title); align-items: center;">
+    <div style="display: flex; flex-direction: column; gap: 40px;">
+      <p style="margin: 0; font-size: var(--type-body); line-height: 1.35; text-wrap: pretty;">Uma ferramenta que empacota sua aplicação com tudo o que ela precisa (PHP, extensões, servidor web e configurações) e roda do mesmo jeito em qualquer computador.</p>
+      <div style="display: flex; flex-direction: column; gap: 4px;">
+        <div style="font-size: var(--type-subtitle); color: oklch(0.87 0.1 95);">Imagem</div>
+        <div style="font-size: var(--type-body); line-height: 1.25;">A receita: um modelo pronto do ambiente</div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 4px;">
+        <div style="font-size: var(--type-subtitle); color: oklch(0.87 0.1 95);">Container</div>
+        <div style="font-size: var(--type-body); line-height: 1.25;">A receita em execução, isolada do resto do sistema</div>
+      </div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 28px;">
+      <pre style="margin: 0; font-family: 'JetBrains Mono', monospace; font-size: var(--type-code); line-height: 1.42; white-space: pre; color: #ecebe4; text-shadow: none; border: 2px dashed rgba(236,235,228,0.35); border-radius: 14px; padding: 28px 36px; background: rgba(255,255,255,0.025); overflow: hidden;"><span style="color: oklch(0.85 0.08 225);"># Dockerfile</span>
+FROM php:7.4-apache
+
+RUN docker-php-ext-install pdo_mysql
+
+COPY . /var/www/html/</pre>
+      <pre style="margin: 0; font-family: 'JetBrains Mono', monospace; font-size: var(--type-code); line-height: 1.42; white-space: pre; color: #ecebe4; text-shadow: none; border: 2px dashed rgba(236,235,228,0.35); border-radius: 14px; padding: 28px 36px; background: rgba(255,255,255,0.025); overflow: hidden;"><span style="color: oklch(0.85 0.08 225);"># Terminal
+</span><span style="color: oklch(0.86 0.09 150);">$</span> docker build -t minha-app .
+<span style="color: oklch(0.86 0.09 150);">$</span> docker run -p 8080:80 minha-app</pre>
+    </div>
+  </div>
+</section>
+
+<section data-label="Por que usar Docker" data-speaker-notes="Contar um caso real de 'na minha máquina funciona'. Reforçar que dá para ter PHP 7.4 e PHP 8 em projetos diferentes sem conflito." style="background: radial-gradient(ellipse 60% 50% at 25% 30%, rgba(255,255,255,0.05), transparent 70%), radial-gradient(ellipse 50% 60% at 80% 75%, rgba(255,255,255,0.035), transparent 70%), #151716; box-shadow: inset 0 0 0 18px #3d2b1d, inset 0 0 0 22px #24190f, inset 0 0 180px rgba(0,0,0,0.65); color: #ecebe4; font-family: 'Patrick Hand', cursive; text-shadow: 0 0 1px rgba(236,235,228,0.55), 0 0 8px rgba(236,235,228,0.12); box-sizing: border-box; padding: var(--pad-top) var(--pad-x) var(--pad-bottom); display: flex; flex-direction: column;">
+  <h2 style="margin: 0; font-family: 'Cabin Sketch', cursive; font-weight: 700; font-size: var(--type-title); line-height: 1.05;">Por que usar Docker</h2>
+  <div style="height: 4px; width: 100%; background: rgba(236,235,228,0.55); border-radius: 4px; transform: rotate(-0.4deg); margin-top: 24px;"></div>
+  <div style="flex: 1; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 72px 120px; align-content: center;">
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="font-family: 'Cabin Sketch', cursive; font-weight: 700; font-size: 96px; line-height: 1; color: oklch(0.87 0.1 95);">01</div>
+      <div style="font-size: var(--type-subtitle);">Fim do "na minha máquina funciona"</div>
+      <div style="font-size: var(--type-small); line-height: 1.3; color: oklch(0.85 0.08 225);">Todo o time usa exatamente o mesmo ambiente.</div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="font-family: 'Cabin Sketch', cursive; font-weight: 700; font-size: 96px; line-height: 1; color: oklch(0.87 0.1 95);">02</div>
+      <div style="font-size: var(--type-subtitle);">Versões lado a lado</div>
+      <div style="font-size: var(--type-small); line-height: 1.3; color: oklch(0.85 0.08 225);">Um projeto em PHP 7.4 e outro em PHP 8 no mesmo computador.</div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="font-family: 'Cabin Sketch', cursive; font-weight: 700; font-size: 96px; line-height: 1; color: oklch(0.87 0.1 95);">03</div>
+      <div style="font-size: var(--type-subtitle);">Começar rápido</div>
+      <div style="font-size: var(--type-small); line-height: 1.3; color: oklch(0.85 0.08 225);">Um novo dev sobe o projeto com um único comando.</div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="font-family: 'Cabin Sketch', cursive; font-weight: 700; font-size: 96px; line-height: 1; color: oklch(0.87 0.1 95);">04</div>
+      <div style="font-size: var(--type-subtitle);">Serviços sem instalação</div>
+      <div style="font-size: var(--type-small); line-height: 1.3; color: oklch(0.85 0.08 225);">MySQL, Redis e outros rodam como containers.</div>
+    </div>
+  </div>
+</section>
+
+<section data-label="Encerramento" data-speaker-notes="Abrir para perguntas." style="background: radial-gradient(ellipse 60% 50% at 25% 30%, rgba(255,255,255,0.05), transparent 70%), radial-gradient(ellipse 50% 60% at 80% 75%, rgba(255,255,255,0.035), transparent 70%), #151716; box-shadow: inset 0 0 0 18px #3d2b1d, inset 0 0 0 22px #24190f, inset 0 0 180px rgba(0,0,0,0.65); color: #ecebe4; font-family: 'Patrick Hand', cursive; text-shadow: 0 0 1px rgba(236,235,228,0.55), 0 0 8px rgba(236,235,228,0.12); box-sizing: border-box; padding: var(--pad-top) var(--pad-x) var(--pad-bottom); display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+  <div style="font-family: 'Cabin Sketch', cursive; font-size: 96px; line-height: 1.1; color: oklch(0.87 0.1 95); margin-top: 16px;">Perguntas?</div><div style="height: 4px; width: 520px; background: rgba(236,235,228,0.55); border-radius: 4px; transform: rotate(-0.5deg); margin-top: 48px;"></div><div style="font-size: var(--type-body); color: oklch(0.85 0.08 225); margin-top: 32px;">Vinicius · Treinamento PHP</div><h2 style="margin: 0; font-family: 'Cabin Sketch', cursive; font-weight: 700; font-size: var(--type-hero); line-height: 1;"><br></h2>
+  
+  
+  
+</section>
+
+</x-import>
+</x-dc>
+</body>
+</html>
